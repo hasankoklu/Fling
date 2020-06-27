@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e3a90befbeb77640b9e617e7c46be4f, type: 3}
+  m_Name: PuzzlePiece9
+  m_EditorClassIdentifier: 
+  Name: defaultPuzzlePiece
+  Tag: defaultPuzzlePiece
+  GameObject: {fileID: 1122463396188490, guid: 2e9c5d935a790ac40bf02d9567125cb1, type: 3}
+  ScaleX: 1
+  ScaleY: 1
