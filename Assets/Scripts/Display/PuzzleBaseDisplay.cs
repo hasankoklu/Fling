@@ -55,7 +55,6 @@ public class PuzzleBaseDisplay : MonoBehaviour
             }
         }
 
-        PlayerPrefs.SetInt("ortSize", (int)(sizeDelta.x));
 
         Camera.main.transform.position = new Vector3((sizeDelta.x - 1) / 2, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
@@ -84,7 +83,16 @@ public class PuzzleBaseDisplay : MonoBehaviour
     IEnumerator ortSizer()
     {
         yield return new WaitForSeconds(2f);
-        while (virtualCam.m_Lens.OrthographicSize > PlayerPrefs.GetInt("ortSize"))
+
+        foreach (Transform item in GameObject.Find("PuzzleBase").transform)
+        {
+            if (item.position.x > ortoograpphicSize)
+            {
+                ortoograpphicSize = (int)(item.position.x);
+            }
+        }
+
+        while (virtualCam.m_Lens.OrthographicSize > ortoograpphicSize + 1)
         {
             virtualCam.m_Lens.OrthographicSize -= 0.01f;
             yield return new WaitForEndOfFrame();
