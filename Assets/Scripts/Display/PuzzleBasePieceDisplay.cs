@@ -10,6 +10,20 @@ public class PuzzleBasePieceDisplay : MonoBehaviour
     [OnValueChanged("UpdateBaseType")]
     public BaseType baseType;
 
+    [HideInInspector]
+    public ObstaclePiece obstaclePiece;
+
+    private void Start()
+    {
+        if (baseType == BaseType.Water)
+        {
+            obstaclePiece = new ObstaclePiece();
+            obstaclePiece.GameObject = gameObject;
+            if (ObstacleDisplay.instance != null)
+                ObstacleDisplay.instance.currentObstaclePieceList.Add(obstaclePiece);
+        }
+    }
+
     void UpdateBaseType()
     {
         GameObject go = Instantiate(GameObject.Find("PuzzleBase").GetComponent<PuzzleBaseDisplay>().GameBasePiecePrefabList[baseType.GetHashCode()]);

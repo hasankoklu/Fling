@@ -545,12 +545,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4043558236761222}
+  - component: {fileID: -1999221540986424207}
   - component: {fileID: 95281725708062478}
   - component: {fileID: 81304284135449161}
   - component: {fileID: -4873136941283188089}
   m_Layer: 0
   m_Name: Dino05
-  m_TagString: Untagged
+  m_TagString: PuzzlePiece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -571,6 +572,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &-1999221540986424207
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420566152801222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: efb6b7573c607f24aa186ad921b6a067, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  puzzlePiece: {fileID: 0}
+  Speed: {x: 0, y: 0, z: 0}
 --- !u!95 &95281725708062478
 Animator:
   serializedVersion: 3
@@ -614,11 +629,11 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1420566152801222}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.9
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Radius: 0.4
+  m_Center: {x: 0, y: 0.3, z: 0}
 --- !u!1 &1509664267451554
 GameObject:
   m_ObjectHideFlags: 0

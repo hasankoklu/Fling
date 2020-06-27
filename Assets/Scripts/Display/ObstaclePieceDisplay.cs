@@ -8,9 +8,26 @@ public class ObstaclePieceDisplay : MonoBehaviour
     [HideInInspector]
     public ObstaclePiece obstaclePiece;
 
+    [Button("Set Default Y Pos")]
+    void SetDefaultYPos()
+    {
+        obstaclePiece = new ObstaclePiece();
+        obstaclePiece.yCoord = transform.position.y;
+    }
+
     [Button("Snap The Object")]
     void SnapObject()
     {
+        obstaclePiece.GameObject = gameObject;
+        if (obstaclePiece.ScaleX == 0)
+        {
+            obstaclePiece.ScaleX = 1;
+        }
+        if (obstaclePiece.ScaleY == 0)
+        {
+            obstaclePiece.ScaleY = 1;
+        }
+
         transform.position = new Vector3(transform.position.x, obstaclePiece.yCoord, transform.position.z);
 
         if ((transform.rotation.z / 90) % 2 == 0) // vertical

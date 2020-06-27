@@ -27,6 +27,7 @@ public class GameSceneDisplay : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
     private void Start()
     {
         isGameRunning = true;

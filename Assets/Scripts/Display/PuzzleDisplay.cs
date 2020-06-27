@@ -7,6 +7,7 @@ public class PuzzleDisplay : MonoBehaviour
 {
     public static PuzzleDisplay instance;
 
+    [HideInInspector]
     public List<PuzzlePiece> currentPuzzlePieceList;
 
     void Awake()

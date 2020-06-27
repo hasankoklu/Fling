@@ -18,10 +18,7 @@ public class PuzzleBaseDisplay : MonoBehaviour
 
     private void Start()
     {
-        if (ortoograpphicSize != 0)
-        {
-            virtualCam.m_Lens.OrthographicSize = ortoograpphicSize;
-        }
+        StartCoroutine(ortSizer());
     }
 
     private void Awake()
@@ -57,7 +54,9 @@ public class PuzzleBaseDisplay : MonoBehaviour
                 }
             }
         }
-        ortoograpphicSize = (int)(sizeDelta.x);
+
+        PlayerPrefs.SetInt("ortSize", (int)(sizeDelta.x));
+
         Camera.main.transform.position = new Vector3((sizeDelta.x - 1) / 2, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
         if (sizeDelta.x < 11 && sizeDelta.y < 11)
@@ -67,7 +66,6 @@ public class PuzzleBaseDisplay : MonoBehaviour
             LookAtHere.transform.position = go.transform.position;
         }
     }
-
 
     [Button("Clear Base")]
     void PuzzleBase()
@@ -82,4 +80,14 @@ public class PuzzleBaseDisplay : MonoBehaviour
         DestroyImmediate(GameObject.FindGameObjectWithTag("Ground"));
     }
 
+
+    IEnumerator ortSizer()
+    {
+        yield return new WaitForSeconds(2f);
+        while (virtualCam.m_Lens.OrthographicSize > PlayerPrefs.GetInt("ortSize"))
+        {
+            virtualCam.m_Lens.OrthographicSize -= 0.01f;
+            yield return new WaitForEndOfFrame();
+        }
+    }
 }

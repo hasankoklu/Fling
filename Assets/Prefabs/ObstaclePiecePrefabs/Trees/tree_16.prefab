@@ -88,8 +88,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4074887113400742}
+  - component: {fileID: 1509305269658007517}
   - component: {fileID: -3166054915429795139}
-  - component: {fileID: 6177702871174341726}
+  - component: {fileID: 7394679070467271744}
   m_Layer: 0
   m_Name: tree_16
   m_TagString: Obstacle
@@ -106,13 +107,26 @@ Transform:
   m_GameObject: {fileID: 1543029249953866}
   m_LocalRotation: {x: 0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.76916, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children:
   - {fileID: 4605014390641318}
   - {fileID: 4253980164568314}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1509305269658007517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1543029249953866}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f58dcf12dca5ae74799dcc732944c7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePiece: {fileID: 0}
 --- !u!54 &-3166054915429795139
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -129,18 +143,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &6177702871174341726
-SphereCollider:
+--- !u!136 &7394679070467271744
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1543029249953866}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.6
+  m_Radius: 1
+  m_Height: 10
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1861026780088590
 GameObject:

@@ -32,6 +32,5 @@ public class ObstacleDisplay : MonoBehaviour
                 DestroyImmediate(child.gameObject);
             }
         }
-
     }
 }
