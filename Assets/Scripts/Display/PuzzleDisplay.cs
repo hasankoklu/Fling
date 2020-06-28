@@ -41,4 +41,10 @@ public class PuzzleDisplay : MonoBehaviour
 
 
     }
+
+    public class MyPuzzleStep
+    {
+        public int level;
+        public List<PuzzlePiece> currentStepPuzzlePiece;
+    }
 }

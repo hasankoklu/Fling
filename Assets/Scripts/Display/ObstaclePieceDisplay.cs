@@ -18,6 +18,9 @@ public class ObstaclePieceDisplay : MonoBehaviour
     [Button("Snap The Object")]
     void SnapObject()
     {
+        obstaclePiece = new ObstaclePiece();
+        obstaclePiece.yCoord = transform.position.y;
+
         obstaclePiece.GameObject = gameObject;
         if (obstaclePiece.ScaleX == 0)
         {
