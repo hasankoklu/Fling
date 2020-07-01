@@ -148,7 +148,8 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
                         if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.x - 1 == transform.position.x && x.GameObject.transform.position.z == transform.position.z).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.x - 1 == transform.position.x && x.GameObject.transform.position.z == transform.position.z).Count() > 0)
                         {
-                            StartCoroutine(WrongSideAnimato());
+                            transform.LookAt(transform.position + (Speed * 20f));
+                            StartCoroutine(Movement(Speed));
                         }
                         else if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.x - 1 > transform.position.x && x.GameObject.transform.position.z == transform.position.z).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.x - 1 > transform.position.x && x.GameObject.transform.position.z == transform.position.z).Count() > 0)
                         {
@@ -170,7 +171,8 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
                         if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.x == transform.position.x - 1 && x.GameObject.transform.position.z == transform.position.z).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.x == transform.position.x - 1 && x.GameObject.transform.position.z == transform.position.z).Count() > 0)
                         {
-                            StartCoroutine(WrongSideAnimato());
+                            transform.LookAt(transform.position + (Speed * 20f));
+                            StartCoroutine(Movement(Speed));
                         }
                         else if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.x < transform.position.x - 1 && x.GameObject.transform.position.z == transform.position.z).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.x < transform.position.x - 1 && x.GameObject.transform.position.z == transform.position.z).Count() > 0)
                         {
@@ -193,7 +195,8 @@ public class PuzzlePieceDisplay : MonoBehaviour
                             .transform.position.x == transform.position.x).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.z - 1 == transform.position.z && x.GameObject
                              .transform.position.x == transform.position.x).Count() > 0)
                         {
-                            StartCoroutine(WrongSideAnimato());
+                            transform.LookAt(transform.position + (Speed * 20f));
+                            StartCoroutine(Movement(Speed));
                         }
                         else if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.z - 1 > transform.position.z &&
                         x.GameObject.transform.position.x == transform.position.x).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.z - 1 > transform.position.z && x.GameObject.transform.position.x == transform.position.x).Count() > 0)
@@ -215,7 +218,8 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
                         if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.z == transform.position.z - 1 && x.GameObject.transform.position.x == transform.position.x).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.z == transform.position.z - 1 && x.GameObject.transform.position.x == transform.position.x).Count() > 0)
                         {
-                            StartCoroutine(HitAnimator());
+                            transform.LookAt(transform.position + (Speed * 20f));
+                            StartCoroutine(Movement(Speed));
                         }
                         else if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.z < transform.position.z - 1 && x.GameObject.transform.position.x == transform.position.x).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.z < transform.position.z - 1 && x.GameObject.transform.position.x == transform.position.x).Count() > 0)
                         {
@@ -225,7 +229,6 @@ public class PuzzlePieceDisplay : MonoBehaviour
                         else
                         {
                             StartCoroutine(WrongSideAnimato());
-
                             GameSceneDisplay.instance.InfoText.text += "This movement is not available! Try Again!";
                         }
                     }
@@ -239,7 +242,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
     public IEnumerator Movement(Vector3 spd)
     {
         IsMoving = true;
-
+        Quaternion rotation = transform.rotation;
         GameSceneDisplay.instance.LockPanel.SetActive(true);
 
         _animator.SetInteger("animation", 14);
@@ -247,6 +250,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
         while (IsMoving)
         {
             transform.Translate(Vector3.Lerp(Vector3.zero, spd, 0.2f), Space.World);
+            //transform.Rotate(Random.Range(5, 10), Random.Range(5, 10), Random.Range(5, 10));
 
             if (transform.position.x < 0 || transform.position.z < 0 || transform.position.x > 10 || transform.position.z > 10)
             {
@@ -298,14 +302,15 @@ public class PuzzlePieceDisplay : MonoBehaviour
             triggedObject.transform.LookAt(transform.position + (spd * 20f));
 
             transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
+            float sety = transform.position.y;
+            //transform.rotation = rotation;
         }
         else if (triggedObject.tag == "Obstacle")
         {
             _animator.SetInteger("animation", 1);
             transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
+
         }
-
-
     }
 
     GameObject triggedObject;
@@ -352,7 +357,6 @@ public class PuzzlePieceDisplay : MonoBehaviour
             _animator.SetInteger("animation", 100);
             yield return new WaitForSeconds(0.2f);
             _animator.SetInteger("animation", 1);
-            Debug.Log("sa");
         }
         else if (transform.rotation.y / 90 == 1)
         {
