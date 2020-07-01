@@ -138,6 +138,22 @@ public class PuzzleDisplay : MonoBehaviour
         {
             foreach (Puzzle pzl in solutionList.puzzleList.Where(x => x.MyStepList.Count == myPuzzle.MyStepList.Count))
             {
+                for (int i = 0; i < myPuzzle.MyStepList.Count; i++)
+                {
+                    foreach (PuzzlePiece item in myPuzzle.MyStepList[i].puzzlePieceList)
+                    {
+                        if (pzl.MyStepList[i].puzzlePieceList.Where(x => x.position.x == item.position.x && x.position.z == item.position.z).Count() == 0)
+                        {
+                            isTempOldSolution = false;
+                        }
+                    }
+                }
+
+                if (isTempOldSolution)
+                {
+                    isOldSolution = isTempOldSolution;
+                }
+
                 //foreach (PuzzlePieceList ms in pzl.MyStepList)
                 //{
                 //    foreach (PuzzlePiece pp in ms.puzzlePieceList)
@@ -156,6 +172,7 @@ public class PuzzleDisplay : MonoBehaviour
                 //        }
                 //    }
                 //}
+               
             }
         }
 
