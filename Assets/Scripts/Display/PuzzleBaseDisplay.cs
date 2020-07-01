@@ -19,6 +19,7 @@ public class PuzzleBaseDisplay : MonoBehaviour
     private void Start()
     {
         StartCoroutine(ortSizer());
+        virtualCam.m_Lens.OrthographicSize = 14;
     }
 
     private void Awake()

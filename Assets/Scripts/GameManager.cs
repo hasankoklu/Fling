@@ -51,9 +51,6 @@ public class GameManager : MonoBehaviour
             GameObject.Find("Suggest-Button").GetComponent<Button>().onClick.AddListener(PuzzleDisplay.instance.SuggestButtonClick);
             GameObject.Find("Back-Button").GetComponent<Button>().onClick.AddListener(PuzzleDisplay.instance.BackButtonClick);
             GameObject.Find("Restart-Button").GetComponent<Button>().onClick.AddListener(() => PuzzleDisplay.instance.LoadPuzzle(currentLevel));
-
-            StartCoroutine(PuzzleDisplay.instance.GetLevelSolutions());
-
             isGameRunning = true;
 
         }
