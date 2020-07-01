@@ -4,15 +4,4 @@ using UnityEngine;
 
 public class GroundDisplay : MonoBehaviour
 {
-
-
-    void Start()
-    {
-        
-    }
-    
-    void Update()
-    {
-        
-    }
 }

@@ -7,6 +7,7 @@ using UnityEditor;
 [ExecuteInEditMode]
 public class PuzzleBasePieceDisplay : MonoBehaviour
 {
+
     [OnValueChanged("UpdateBaseType")]
     public BaseType baseType;
 

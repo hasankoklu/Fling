@@ -9,6 +9,7 @@ TagManager:
   - FinishedPuzzle
   - Ground
   - Water
+  - PuzzleBasePiece
   layers:
   - Default
   - TransparentFX

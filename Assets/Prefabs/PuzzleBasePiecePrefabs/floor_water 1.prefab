@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -8218567778231108386}
   m_Layer: 0
   m_Name: floor_water 1
-  m_TagString: Water
+  m_TagString: PuzzleBasePiece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -95,7 +95,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseType: 3
-  obstaclePiece: {fileID: 0}
+  obstaclePiece:
+    GameObject: {fileID: 0}
+    ScaleX: 0
+    ScaleY: 0
 --- !u!54 &8334311726441182504
 Rigidbody:
   m_ObjectHideFlags: 0

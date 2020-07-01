@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Puzzle", menuName = "Puzzle")]
-public class Puzzle : ScriptableObject
+[System.Serializable]
+public class Puzzle
 {
+    [SerializeField]
     public int Level;
-    public List<PuzzleBasePiece> PuzzleBasePieceList;
-    public List<PuzzlePiece> PuzzlePieceList;
-    public List<ObstaclePiece> ObstaclePieceList;
-    public GameObject PuzzleGroundPrefab;
-    
+    [SerializeField]
+    public List<PuzzlePieceList> MyStepList;
 }

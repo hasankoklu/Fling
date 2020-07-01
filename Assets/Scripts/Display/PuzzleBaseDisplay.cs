@@ -88,7 +88,7 @@ public class PuzzleBaseDisplay : MonoBehaviour
         {
             if (item.position.x > ortoograpphicSize)
             {
-                ortoograpphicSize = (int)(item.position.x);
+                ortoograpphicSize = (int)(item.position.x) + 3;
             }
         }
 

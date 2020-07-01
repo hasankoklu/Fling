@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 933400578425499418}
   m_Layer: 0
   m_Name: floor_earth 1
-  m_TagString: Untagged
+  m_TagString: PuzzleBasePiece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -93,3 +93,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   baseType: 0
+  obstaclePiece:
+    GameObject: {fileID: 0}
+    ScaleX: 0
+    ScaleY: 0
