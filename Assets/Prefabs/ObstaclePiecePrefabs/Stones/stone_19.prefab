@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 33174740706843704}
   - component: {fileID: 23329785325444550}
   - component: {fileID: -7375121801997839230}
+  - component: {fileID: 8418991205928583944}
   m_Layer: 0
   m_Name: stone_19
   m_TagString: Obstacle
@@ -94,3 +95,16 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300064, guid: 4b0c53c1b9f282d49ac0bc03dea5ea78, type: 3}
+--- !u!114 &8418991205928583944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1219818347439178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f58dcf12dca5ae74799dcc732944c7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePiece: {fileID: 0}

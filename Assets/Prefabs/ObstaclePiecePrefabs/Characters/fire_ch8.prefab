@@ -88,6 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4740612486482692}
+  - component: {fileID: 1904497004730674750}
   m_Layer: 0
   m_Name: fire_ch8
   m_TagString: Untagged
@@ -111,6 +112,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1904497004730674750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1825044989199542}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f58dcf12dca5ae74799dcc732944c7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obstaclePiece: {fileID: 0}
 --- !u!1 &1933067252679254
 GameObject:
   m_ObjectHideFlags: 0

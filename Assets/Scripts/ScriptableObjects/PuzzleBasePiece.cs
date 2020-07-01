@@ -2,10 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "New Puzzle Base Piece", menuName = "Puzzle Base Piece")]
-public class PuzzleBasePiece : ScriptableObject
+[System.Serializable]
+public class PuzzleBasePiece
 {
-    public string Name;
-    public GameObject gameObject;
+    public GameObject GameObject;
 
 }
