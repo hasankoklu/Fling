@@ -298,11 +298,6 @@ public class PuzzleDisplay : MonoBehaviour
                 }
             }
 
-            foreach (PuzzlePiece item in suggestableSolution.MyStepList[solutionStep + 1].puzzlePieceList)
-            {
-                Debug.Log("ip :" + item.position);
-            }
-
             if (isSolutionOkay)
             {
                 foreach (PuzzlePiece pp in suggestableSolution.MyStepList[solutionStep].puzzlePieceList)
