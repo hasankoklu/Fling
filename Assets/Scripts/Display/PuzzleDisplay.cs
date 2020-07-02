@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using System.Net.Http.Headers;
 
 public class PuzzleDisplay : MonoBehaviour
 {
@@ -72,7 +73,7 @@ public class PuzzleDisplay : MonoBehaviour
     }
 
     [Button("Snap This Puzzle")]
-    void SnapThisPuzzle()
+    public void SnapThisPuzzle()
     {
         foreach (GameObject obstacle in GameObject.FindGameObjectsWithTag("Obstacle"))
         {
@@ -108,6 +109,7 @@ public class PuzzleDisplay : MonoBehaviour
     [Button("Save This Puzzle")]
     void SavePuzzle(int level)
     {
+        Debug.Log("open for level design editor");
         //UnityEditor.EditorSceneManager.SaveScene(UnityEditor.EditorSceneManager.GetActiveScene(), "Assets/Scenes/Levels/Level" + level.ToString() + ".unity");
     }
 
@@ -138,7 +140,6 @@ public class PuzzleDisplay : MonoBehaviour
             solutionList = new PuzzleList();
             solutionList.puzzleList = new List<Puzzle>();
         }
-
         if (solutionList.puzzleList != null)
             if (solutionList.puzzleList.Where(x => x.MyStepList.Count == myPuzzle.MyStepList.Count).Count() == 0)
             {
@@ -262,16 +263,26 @@ public class PuzzleDisplay : MonoBehaviour
         ArrangeThisPuzzle();
     }
 
+    public void SuggestButtonClick()
+    {
+        StartCoroutine(SuggestButtonClickEnum());
+    }
+
+
     bool isSolutionOkay;
     int solutionStep;
     GameObject suggestedGO;
     GameObject targetGO;
-    public void SuggestButtonClick()
+    public IEnumerator SuggestButtonClickEnum()
     {
+        yield return StartCoroutine(GetLevelSolutions());
+
+        List<GameObject> currentppGO = new List<GameObject>();
+        currentppGO = GameObject.FindGameObjectsWithTag("PuzzlePiece").ToList();
+        int currentPuzzleCount = GameObject.FindGameObjectsWithTag("PuzzlePiece").Count();
+
         foreach (Puzzle suggestableSolution in solutionList.puzzleList)
         {
-            int currentPuzzleCount = GameObject.FindGameObjectsWithTag("PuzzlePiece").Count();
-
             suggestedGO = null;
             targetGO = null;
 
@@ -280,7 +291,7 @@ public class PuzzleDisplay : MonoBehaviour
                 if (suggestableSolution.MyStepList[i].puzzlePieceList.Count == currentPuzzleCount)
                 {
                     isSolutionOkay = true;
-                    foreach (GameObject ppGO in GameObject.FindGameObjectsWithTag("PuzzlePiece"))
+                    foreach (GameObject ppGO in currentppGO)
                     {
                         if (suggestableSolution.MyStepList[i].puzzlePieceList.Where(x => (x.position.x == ppGO.transform.position.x && x.position.z == ppGO.transform.position.z)).Count() == 0)
                         {
@@ -297,37 +308,32 @@ public class PuzzleDisplay : MonoBehaviour
                     }
                 }
             }
-
             if (isSolutionOkay)
             {
                 foreach (PuzzlePiece pp in suggestableSolution.MyStepList[solutionStep].puzzlePieceList)
                 {
                     if (suggestableSolution.MyStepList[solutionStep + 1].puzzlePieceList.Where(x => (x.position.x == pp.position.x && x.position.z == pp.position.z)).Count() == 0)
                     {
-                        if (suggestableSolution.MyStepList[solutionStep + 1].puzzlePieceList.Where(x => (x.position.x == pp.position.x - 1 && x.position.z == pp.position.z) || (x.position.x == pp.position.x + 1 && x.position.z == pp.position.z) || (x.position.x == pp.position.x && x.position.z == pp.position.z + 1) || (x.position.x == pp.position.x && x.position.z == pp.position.z - 1)).Count() == 0)
-                        {
-                            suggestedGO = pp.GameObject;
-                        }
-                        else
-                        {
-                            if (targetGO == null)
-                            {
-                                targetGO = pp.GameObject;
-                            }
-                            else if (suggestedGO == null)
-                            {
-                                suggestedGO = pp.GameObject;
-                            }
-                        }
+                        suggestedGO = suggestableSolution.MyStepList[solutionStep].puzzlePieceList.Where(
+                            x => x.GameObject.transform.position.x == suggestableSolution.MyStepList[solutionStep].movedObjectPos.x &&
+                            x.GameObject.transform.position.z == suggestableSolution.MyStepList[solutionStep].movedObjectPos.z)
+                            .FirstOrDefault().GameObject;
+
+                        //targetGO = suggestableSolution.MyStepList[solutionStep].puzzlePieceList.Where(
+                        // x => x.GameObject.transform.position.x == suggestableSolution.MyStepList[solutionStep].targetObjectPos.x &&
+                        // x.GameObject.transform.position.z == suggestableSolution.MyStepList[solutionStep].targetObjectPos.z)
+                        // .FirstOrDefault().GameObject;
+
                     }
                     else
                     {
                         suggestableSolution.MyStepList[solutionStep + 1].puzzlePieceList.Where(x => (x.position.x == pp.position.x && x.position.z == pp.position.z)).FirstOrDefault().GameObject = pp.GameObject;
                     }
                 }
-                suggestedGO.transform.LookAt(targetGO.transform);
+                Debug.Log(suggestedGO.name);
+                suggestedGO.transform.LookAt(suggestableSolution.MyStepList[solutionStep].targetObjectPos);
                 suggestedGO.GetComponent<PuzzlePieceDisplay>()._animator.SetInteger("animation", 6);
-                return;
+                yield break;
             }
         }
         StartCoroutine(animWaiter(GameObject.Find("Back-Button")));

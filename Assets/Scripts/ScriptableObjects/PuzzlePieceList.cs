@@ -6,4 +6,6 @@ using UnityEngine;
 public class PuzzlePieceList
 {
     public List<PuzzlePiece> puzzlePieceList;
+    public Vector3 movedObjectPos;
+    public Vector3 targetObjectPos;
 }

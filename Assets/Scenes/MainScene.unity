@@ -958,7 +958,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentLevel: 1
   SelectedObject: {fileID: 0}
-  PuzzleMovementSpeed: 0.8
+  PuzzleMovementSpeed: 0.671
   SlideDetectionDistance: 130
   InGameCanvas: {fileID: 83488793}
   isGameRunning: 0
