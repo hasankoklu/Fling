@@ -49,6 +49,8 @@ public class PuzzleDisplay : MonoBehaviour
             ppl.puzzlePieceList.Add(pp);
         }
         myPuzzle.MyStepList.Add(ppl);
+        StartCoroutine(GetLevelSolutions());
+
     }
 
     [Button("Arrange This Puzzle")]
@@ -130,54 +132,44 @@ public class PuzzleDisplay : MonoBehaviour
     public void SaveSolution()
     {
         isOldSolution = false;
-        if (solutionList.puzzleList.Where(x => x.MyStepList.Count == myPuzzle.MyStepList.Count).Count() == 0)
+
+        if (solutionList.puzzleList == null)
         {
-            isOldSolution = false;
+            solutionList = new PuzzleList();
+            solutionList.puzzleList = new List<Puzzle>();
         }
-        else
-        {
-            foreach (Puzzle pzl in solutionList.puzzleList.Where(x => x.MyStepList.Count == myPuzzle.MyStepList.Count))
+
+        if (solutionList.puzzleList != null)
+            if (solutionList.puzzleList.Where(x => x.MyStepList.Count == myPuzzle.MyStepList.Count).Count() == 0)
             {
-                for (int i = 0; i < myPuzzle.MyStepList.Count; i++)
+                isOldSolution = false;
+            }
+            else
+            {
+                foreach (Puzzle pzl in solutionList.puzzleList.Where(x => x.MyStepList.Count == myPuzzle.MyStepList.Count))
                 {
-                    foreach (PuzzlePiece item in myPuzzle.MyStepList[i].puzzlePieceList)
+                    isTempOldSolution = true;
+                    for (int i = 0; i < myPuzzle.MyStepList.Count; i++)
                     {
-                        if (pzl.MyStepList[i].puzzlePieceList.Where(x => x.position.x == item.position.x && x.position.z == item.position.z).Count() == 0)
+                        foreach (PuzzlePiece item in myPuzzle.MyStepList[i].puzzlePieceList)
                         {
-                            isTempOldSolution = false;
+                            if (pzl.MyStepList[i].puzzlePieceList.Where(x => x.position.x == item.position.x && x.position.z == item.position.z).Count() == 0)
+                            {
+                                isTempOldSolution = false;
+                            }
                         }
                     }
-                }
 
-                if (isTempOldSolution)
-                {
-                    isOldSolution = isTempOldSolution;
+                    if (isTempOldSolution)
+                    {
+                        isOldSolution = isTempOldSolution;
+                    }
                 }
-
-                //foreach (PuzzlePieceList ms in pzl.MyStepList)
-                //{
-                //    foreach (PuzzlePiece pp in ms.puzzlePieceList)
-                //    {
-                //        isTempOldSolution = true;
-                //        foreach (PuzzlePieceList myppl in myPuzzle.MyStepList)
-                //        {
-                //            if (myppl.puzzlePieceList.Where(x => x.position.x == pp.position.x && x.position.z == pp.position.z).Count() == 0)
-                //            {
-                //                isTempOldSolution = false;
-                //            }
-                //        }
-                //        if (isTempOldSolution == true)
-                //        {
-                //            isOldSolution = true;
-                //        }
-                //    }
-                //}
-               
             }
-        }
 
         if (!isOldSolution)
         {
+            Debug.Log("it's new solution");
             solutionList.puzzleList.Add(myPuzzle);
             string json = JsonUtility.ToJson(solutionList);
             File.WriteAllText("Assets/Resources/Level" + GameManager.instance.currentLevel + "Solution.txt", json);
@@ -210,10 +202,13 @@ public class PuzzleDisplay : MonoBehaviour
             if (uwr.isNetworkError)
             {
                 Debug.Log(uwr.isNetworkError.ToString());
+                solutionList = new PuzzleList();
+                solutionList.puzzleList = new List<Puzzle>();
             }
             else
             {
                 Debug.Log(uwr.downloadHandler.text);
+
                 JsonUtility.FromJsonOverwrite(uwr.downloadHandler.text, solutionList);
 
                 foreach (PuzzlePiece item in solutionList.puzzleList.FirstOrDefault().MyStepList.FirstOrDefault().puzzlePieceList)
@@ -253,6 +248,7 @@ public class PuzzleDisplay : MonoBehaviour
             item.GameObject.GetComponent<Rigidbody>().velocity = Vector3.zero;
             item.GameObject.GetComponent<Rigidbody>().useGravity = false;
             item.GameObject.transform.position = item.position;
+            item.GameObject.transform.rotation = Quaternion.identity;
 
             item.GameObject.tag = "PuzzlePiece";
         }
@@ -286,13 +282,13 @@ public class PuzzleDisplay : MonoBehaviour
                     isSolutionOkay = true;
                     foreach (GameObject ppGO in GameObject.FindGameObjectsWithTag("PuzzlePiece"))
                     {
-                        if (suggestableSolution.MyStepList[i].puzzlePieceList.Where(x => x.position == ppGO.transform.position).Count() == 0)
+                        if (suggestableSolution.MyStepList[i].puzzlePieceList.Where(x => (x.position.x == ppGO.transform.position.x && x.position.z == ppGO.transform.position.z)).Count() == 0)
                         {
                             isSolutionOkay = false;
                         }
                         else
                         {
-                            suggestableSolution.MyStepList[i].puzzlePieceList.Where(x => x.position == ppGO.transform.position).FirstOrDefault().GameObject = ppGO;
+                            suggestableSolution.MyStepList[i].puzzlePieceList.Where(x => (x.position.x == ppGO.transform.position.x && x.position.z == ppGO.transform.position.z)).FirstOrDefault().GameObject = ppGO;
                         }
                     }
                     if (isSolutionOkay)
@@ -300,6 +296,11 @@ public class PuzzleDisplay : MonoBehaviour
                         solutionStep = i;
                     }
                 }
+            }
+
+            foreach (PuzzlePiece item in suggestableSolution.MyStepList[solutionStep + 1].puzzlePieceList)
+            {
+                Debug.Log("ip :" + item.position);
             }
 
             if (isSolutionOkay)
@@ -326,7 +327,7 @@ public class PuzzleDisplay : MonoBehaviour
                     }
                     else
                     {
-                        suggestableSolution.MyStepList[solutionStep + 1].puzzlePieceList.Where(x => x.position == pp.position).FirstOrDefault().GameObject = pp.GameObject;
+                        suggestableSolution.MyStepList[solutionStep + 1].puzzlePieceList.Where(x => (x.position.x == pp.position.x && x.position.z == pp.position.z)).FirstOrDefault().GameObject = pp.GameObject;
                     }
                 }
                 suggestedGO.transform.LookAt(targetGO.transform);
