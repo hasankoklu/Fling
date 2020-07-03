@@ -11,7 +11,7 @@ public class AudioDisplay : MonoBehaviour
 
     public static AudioDisplay instance;
 
-    public AudioClip MmainMusic;
+    public AudioClip MainMusic;
     public AudioClip AmbianceMusic;
     public AudioClip OnHitMusic;
 
@@ -38,9 +38,11 @@ public class AudioDisplay : MonoBehaviour
     private void Start()
     {
         mainMenuAudioSource = gameObject.AddComponent<AudioSource>();
+        mainMenuAudioSource.loop = true;
         StartCoroutine(MainMenuAudioSourceVolume());
         AmbianceAudioSource = gameObject.AddComponent<AudioSource>();
         AmbianceAudioSource.clip = AmbianceMusic;
+        AmbianceAudioSource.loop = true;
         AmbianceAudioSource.volume = 0.35f;
         AmbianceAudioSource.Play();
 
@@ -48,7 +50,7 @@ public class AudioDisplay : MonoBehaviour
 
     IEnumerator MainMenuAudioSourceVolume()
     {
-        mainMenuAudioSource.clip = MmainMusic;
+        mainMenuAudioSource.clip = MainMusic;
         mainMenuAudioSource.volume = 0.001f;
         mainMenuAudioSource.Play();
         while (mainMenuAudioSource.volume < 0.49f)

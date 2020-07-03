@@ -4679,7 +4679,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015259, y: 121}
+  m_AnchoredPosition: {x: 0.000015259, y: 73.16203}
   m_SizeDelta: {x: 499.90192, y: 123.35254}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &853356017
@@ -4703,7 +4703,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 35
+    m_FontSize: 45
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 3
@@ -6836,8 +6836,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: -971.29517}
+  m_AnchoredPosition: {x: 0, y: 58}
+  m_SizeDelta: {x: -218.37024, y: -1148.7881}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1342445457
 MonoBehaviour:
@@ -6852,7 +6852,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.392}
+  m_Color: {r: 0.5803922, g: 0.37254903, b: 0.21960786, a: 0.8862745}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7220,7 +7220,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c51586542aa1e409386300fbffc6e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MmainMusic: {fileID: 8300000, guid: 7b83fd5f498e20e46b73985a5e6a00d5, type: 3}
+  MainMusic: {fileID: 8300000, guid: 7b83fd5f498e20e46b73985a5e6a00d5, type: 3}
   AmbianceMusic: {fileID: 8300000, guid: ddf2ac7e72da4f6438df84f0b1376a3b, type: 3}
   OnHitMusic: {fileID: 8300000, guid: 6d2c0864764238c429fbfba8ba55a49b, type: 3}
   FinishMusicList:
@@ -8941,7 +8941,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.000015259, y: -37.162}
+  m_AnchoredPosition: {x: 0.000015259, y: -85}
   m_SizeDelta: {x: 278.1353, y: 74.32379}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1848103699
