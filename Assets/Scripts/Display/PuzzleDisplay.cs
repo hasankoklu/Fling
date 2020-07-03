@@ -229,6 +229,13 @@ public class PuzzleDisplay : MonoBehaviour
         if (myPuzzle.MyStepList.Count == 1)
             return;
 
+
+        if (GameManager.instance.backButtonCounter == 0)
+        {
+            GameSceneDisplay.instance.InfoPopUpRect.SetActive(true);
+            Debug.Log("Watch  video and won the Back gift");
+        }
+
         GameSceneDisplay.instance.LockPanel.SetActive(false);
 
         myPuzzle.MyStepList.Remove(myPuzzle.MyStepList.LastOrDefault());
@@ -260,6 +267,7 @@ public class PuzzleDisplay : MonoBehaviour
             currentPuzzlePieceList.Add(item.GetComponent<PuzzlePieceDisplay>().puzzlePiece);
         }
 
+        GameManager.instance.backButtonCounter--;
         ArrangeThisPuzzle();
     }
 
@@ -275,7 +283,10 @@ public class PuzzleDisplay : MonoBehaviour
     GameObject targetGO;
     public IEnumerator SuggestButtonClickEnum()
     {
-        yield return StartCoroutine(GetLevelSolutions());
+        if (solutionList.puzzleList.Count == 0)
+        {
+            yield return StartCoroutine(GetLevelSolutions());
+        }
 
         List<GameObject> currentppGO = new List<GameObject>();
         currentppGO = GameObject.FindGameObjectsWithTag("PuzzlePiece").ToList();

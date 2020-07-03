@@ -1,4 +1,5 @@
 ﻿using Sirenix.OdinInspector;
+using Sirenix.Utilities;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
@@ -91,7 +92,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
         _animator = GetComponent<Animator>();
         _animator.SetInteger("animation", 1);
         _animator.speed = Random.Range(0.8f, 1.2f);
-
+        StartCoroutine(GrumbleSound());
         PuzzleDisplay.instance.currentPuzzlePieceList.Add(puzzlePiece);
     }
 
@@ -274,7 +275,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
                 if (PuzzleDisplay.instance.currentPuzzlePieceList.Count == 1 && GameManager.instance.isGameRunning)
                 {
                     int i = Random.Range(0, AudioDisplay.instance.FinishMusicList.Count);
-                    GameManager.instance.GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.FinishMusicList[i]);
+                    GameManager.instance.GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.FinishMusicList[i], 0.4f);
                     PuzzleDisplay.instance.currentPuzzlePieceList.FirstOrDefault().GameObject.GetComponent<Animator>().SetInteger("animation", 2);
 
                     GameSceneDisplay.instance.FinishPopUpRect.SetActive(true);
@@ -324,7 +325,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
         {
             triggedObject = other.gameObject;
             IsMoving = false;
-            AudioDisplay.instance._audioSource.PlayOneShot(AudioDisplay.instance.onHitMusic, 1f);
+            AudioDisplay.instance.GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.OnHitMusic, 1f);
         }
         else if (other.tag == "Obstacle")
         {
@@ -373,6 +374,15 @@ public class PuzzlePieceDisplay : MonoBehaviour
             _animator.SetInteger("animation", 103);
             yield return new WaitForSeconds(0.2f);
             _animator.SetInteger("animation", 1);
+        }
+    }
+
+    IEnumerator GrumbleSound()
+    {
+        while (gameObject.tag == "PuzzlePiece")
+        {
+            //GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.GrumbleMusicList[Random.Range(0, AudioDisplay.instance.GrumbleMusicList.Count)], Random.Range(0.1f, 0.2f));
+            yield return new WaitForSeconds(Random.Range(1.2f, 2.1f));
         }
     }
 }

@@ -11,6 +11,7 @@ public class GameSceneDisplay : MonoBehaviour
     public GameObject LockPanel;
     public Text InfoText;
     public GameObject FinishPopUpRect;
+    public GameObject InfoPopUpRect;
 
     void Awake()
     {
@@ -26,10 +27,15 @@ public class GameSceneDisplay : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
         gameObject.SetActive(false);
     }
-    
+
     public void RestartButtonClick()
     {
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene("MainScene");
+    }
+
+    public void WatchButtonClick()
+    {
+        GameManager.instance.backButtonCounter = 5;
     }
 
 }
