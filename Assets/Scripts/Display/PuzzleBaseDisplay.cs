@@ -76,10 +76,10 @@ public class PuzzleBaseDisplay : MonoBehaviour
                 int k = (int)(sizeDelta.x - 8);
                 int l = (int)(sizeDelta.y - 8);
                 GameObject go = Instantiate(SquareGround);
-                go.transform.position = new Vector3((sizeDelta.x - 1) / 2, -Math.Abs(0.22f + (k * 0.22f)), sizeDelta.y / 2);
+                go.transform.position = new Vector3((sizeDelta.x - 1) / 2, -Math.Abs(0.26f + (k * 0.26f)), sizeDelta.y / 2);
                 go.transform.localScale = new Vector3((1 + k * 0.14f), (1 + ((k + l) / 2f * 0.14f)), (1 + l * 0.14f));
                 CameraSystem.transform.position = new Vector3(0.5f + k * 0.5f, CameraSystem.transform.position.y, CameraSystem.transform.position.z);
-                LookAtHere.transform.position = new Vector3(sizeDelta.x / 2, go.transform.position.y, go.transform.position.z);
+                LookAtHere.transform.position = new Vector3(sizeDelta.x / 2, go.transform.position.y, sizeDelta.y / 2);
             }
         }
     }
@@ -106,7 +106,7 @@ public class PuzzleBaseDisplay : MonoBehaviour
         {
             if (item.position.x > ortoograpphicSize)
             {
-                ortoograpphicSize = (int)(item.position.x) + 4;
+                ortoograpphicSize = (int)(item.position.x) + 5;
             }
         }
 
