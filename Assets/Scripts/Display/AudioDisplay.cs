@@ -1,16 +1,22 @@
-﻿using System.Collections;
+﻿using ES3Types;
+using System;
+using System.Collections;
 using System.Collections.Generic;
+//using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.Assertions.Must;
 
 public class AudioDisplay : MonoBehaviour
 {
 
     public static AudioDisplay instance;
 
-    public AudioClip mainMusic;
-    public AudioClip onHitMusic;
+    public AudioClip MainMusic;
+    public AudioClip AmbianceMusic;
+    public AudioClip OnHitMusic;
 
     public List<AudioClip> FinishMusicList;
+    public List<AudioClip> GrumbleMusicList;
 
     [HideInInspector]
     public AudioSource _audioSource;
@@ -25,10 +31,32 @@ public class AudioDisplay : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        _audioSource = GetComponent<AudioSource>();
-        _audioSource.clip = mainMusic;
-        _audioSource.volume = 0.1f;
-        _audioSource.Play(0);
+        DontDestroyOnLoad(gameObject);
+    }
+    AudioSource mainMenuAudioSource;
+    AudioSource AmbianceAudioSource;
+    private void Start()
+    {
+        mainMenuAudioSource = gameObject.AddComponent<AudioSource>();
+        mainMenuAudioSource.loop = true;
+        StartCoroutine(MainMenuAudioSourceVolume());
+        AmbianceAudioSource = gameObject.AddComponent<AudioSource>();
+        AmbianceAudioSource.clip = AmbianceMusic;
+        AmbianceAudioSource.loop = true;
+        AmbianceAudioSource.volume = 0.35f;
+        AmbianceAudioSource.Play();
+
     }
 
+    IEnumerator MainMenuAudioSourceVolume()
+    {
+        mainMenuAudioSource.clip = MainMusic;
+        mainMenuAudioSource.volume = 0.001f;
+        mainMenuAudioSource.Play();
+        while (mainMenuAudioSource.volume < 0.49f)
+        {
+            mainMenuAudioSource.volume = Mathf.Lerp(mainMenuAudioSource.volume, 0.5f, 0.00005f);
+            yield return new WaitForEndOfFrame();
+        }
+    }
 }

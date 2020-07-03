@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using Sirenix.OdinInspector;
 using Cinemachine;
+using System;
+using System.Diagnostics;
 
 public class PuzzleBaseDisplay : MonoBehaviour
 {
     public static PuzzleBaseDisplay instance;
 
-    public GameObject Ground7xPrefab;
-
+    public GameObject SquareGround;
+    public GameObject RectangeGround;
     public GameObject LookAtHere;
+    public GameObject CameraSystem;
 
     public List<GameObject> GameBasePiecePrefabList = new List<GameObject>();
     public CinemachineVirtualCamera virtualCam;
@@ -59,11 +62,25 @@ public class PuzzleBaseDisplay : MonoBehaviour
 
         Camera.main.transform.position = new Vector3((sizeDelta.x - 1) / 2, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
-        if (sizeDelta.x < 11 && sizeDelta.y < 11)
+        if (sizeDelta.x < 21 && sizeDelta.y < 21)
         {
-            GameObject go = Instantiate(Ground7xPrefab);
-            go.transform.position = new Vector3((sizeDelta.x - 1) / 2, 0, sizeDelta.y / 2);
-            LookAtHere.transform.position = go.transform.position;
+            if (sizeDelta.x / sizeDelta.y > 1.5f)
+            {
+                GameObject go = Instantiate(RectangeGround);
+                go.transform.position = new Vector3((sizeDelta.x - 1) / 2, 0, sizeDelta.y / 2);
+                //go.transform.localScale = go.transform.localScale
+                LookAtHere.transform.position = go.transform.position;
+            }
+            else
+            {
+                int k = (int)(sizeDelta.x - 8);
+                int l = (int)(sizeDelta.y - 8);
+                GameObject go = Instantiate(SquareGround);
+                go.transform.position = new Vector3((sizeDelta.x - 1) / 2, -Math.Abs(0.26f + (k * 0.26f)), sizeDelta.y / 2);
+                go.transform.localScale = new Vector3((1 + k * 0.14f), (1 + ((k + l) / 2f * 0.14f)), (1 + l * 0.14f));
+                CameraSystem.transform.position = new Vector3(0.5f + k * 0.5f, CameraSystem.transform.position.y, CameraSystem.transform.position.z);
+                LookAtHere.transform.position = new Vector3(sizeDelta.x / 2, go.transform.position.y, sizeDelta.y / 2);
+            }
         }
     }
 
@@ -89,11 +106,11 @@ public class PuzzleBaseDisplay : MonoBehaviour
         {
             if (item.position.x > ortoograpphicSize)
             {
-                ortoograpphicSize = (int)(item.position.x) + 3;
+                ortoograpphicSize = (int)(item.position.x) + 5;
             }
         }
 
-        while (virtualCam.m_Lens.OrthographicSize > ortoograpphicSize + 1)
+        while (virtualCam.m_Lens.OrthographicSize > ortoograpphicSize)
         {
             virtualCam.m_Lens.OrthographicSize -= 0.01f;
             yield return new WaitForEndOfFrame();
