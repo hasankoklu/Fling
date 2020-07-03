@@ -518,7 +518,7 @@ MonoBehaviour:
   LockPanel: {fileID: 1130341731}
   InfoText: {fileID: 1565704759}
   FinishPopUpRect: {fileID: 975725658}
-  InfoPopUpRect: {fileID: 0}
+  InfoPopUpRect: {fileID: 1342445455}
 --- !u!1 &88813603
 GameObject:
   m_ObjectHideFlags: 0
