@@ -97,7 +97,6 @@ public class PuzzleBaseDisplay : MonoBehaviour
         DestroyImmediate(GameObject.FindGameObjectWithTag("Ground"));
     }
 
-
     IEnumerator ortSizer()
     {
         yield return new WaitForSeconds(2f);

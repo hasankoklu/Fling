@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public int currentLevel = 1;
 
+    [HideInInspector]
     public GameObject SelectedObject;
     public float PuzzleMovementSpeed;
     public float SlideDetectionDistance;
@@ -51,8 +52,10 @@ public class GameManager : MonoBehaviour
             GameObject.Find("Suggest-Button").GetComponent<Button>().onClick.AddListener(PuzzleDisplay.instance.SuggestButtonClick);
             GameObject.Find("Back-Button").GetComponent<Button>().onClick.AddListener(PuzzleDisplay.instance.BackButtonClick);
             GameObject.Find("Restart-Button").GetComponent<Button>().onClick.AddListener(() => PuzzleDisplay.instance.LoadPuzzle(currentLevel));
-            isGameRunning = true;
+            GameSceneDisplay.instance.WindParticlePrefab = GameObject.Find("Particle");
+            GameSceneDisplay.instance.WindParticlePrefab.SetActive(false);
 
+            isGameRunning = true;
         }
     }
 
@@ -66,6 +69,11 @@ public class GameManager : MonoBehaviour
         {
             currentLevel = PlayerPrefs.GetInt("currentLevel");
         }
+
+        //foreach (GameObject item in GameObject.FindGameObjectsWithTag("PuzzlePiece"))
+        //{
+        //    item.GetComponent<Animator>().SetInteger("animation", 20);
+        //}
     }
 
     public void GoToNextLevelButtonClick()
