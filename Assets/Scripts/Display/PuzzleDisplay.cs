@@ -237,7 +237,7 @@ public class PuzzleDisplay : MonoBehaviour
         }
 
         GameSceneDisplay.instance.LockPanel.SetActive(false);
-        GameSceneDisplay.instance.WindParticlePrefab.SetActive(false);
+        //GameSceneDisplay.instance.WindParticlePrefab.SetActive(false);
 
         myPuzzle.MyStepList.Remove(myPuzzle.MyStepList.LastOrDefault());
 

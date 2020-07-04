@@ -8,7 +8,7 @@ public class GameSceneDisplay : MonoBehaviour
 {
 
     public static GameSceneDisplay instance;
-    public GameObject WindParticlePrefab;
+    //public GameObject WindParticlePrefab;
     public GameObject LockPanel;
     public Text InfoText;
     public GameObject FinishPopUpRect;

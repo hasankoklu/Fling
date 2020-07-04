@@ -30,7 +30,7 @@ public class PuzzleBasePieceDisplay : MonoBehaviour
         GameObject go = Instantiate(GameObject.Find("PuzzleBase").GetComponent<PuzzleBaseDisplay>().GameBasePiecePrefabList[baseType.GetHashCode()]);
         go.transform.SetParent(transform.parent);
         go.transform.position = transform.position;
-
+        go.gameObject.GetComponent<PuzzleBasePieceDisplay>().baseType = baseType;
         StartCoroutine(ien());
     }
 

@@ -17,6 +17,8 @@ public class PuzzlePieceDisplay : MonoBehaviour
     [HideInInspector]
     public Vector3 Speed;
 
+    int currentDirection;
+
     [Button("Snap The Object")]
     public void SnapObject()
     {
@@ -85,6 +87,23 @@ public class PuzzlePieceDisplay : MonoBehaviour
     private void Awake()
     {
         puzzlePiece.GameObject = gameObject;
+        if (transform.rotation.eulerAngles.y == 0)
+        {
+            currentDirection = 0;
+        }
+        else if (transform.rotation.eulerAngles.y == 90)
+        {
+            currentDirection = 1;
+        }
+        else if (transform.rotation.eulerAngles.y == -180)
+        {
+            currentDirection = 2;
+        }
+        else if (transform.rotation.eulerAngles.y == -90)
+        {
+            currentDirection = 3;
+        }
+
     }
 
     public Animator _animator;
@@ -93,7 +112,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
         _animator = GetComponent<Animator>();
         _animator.SetInteger("animation", 1);
         _animator.speed = UnityEngine.Random.Range(0.8f, 1.2f);
-        StartCoroutine(GrumbleSound());
+        //StartCoroutine(GrumbleSound());
         PuzzleDisplay.instance.currentPuzzlePieceList.Add(puzzlePiece);
     }
 
@@ -133,9 +152,16 @@ public class PuzzlePieceDisplay : MonoBehaviour
         if (GameManager.instance.SelectedObject != null)
             if (GameManager.instance.SelectedObject == this.gameObject)
             {
+                if (!GetComponent<AudioSource>().isPlaying)
+                {
+                    GrumbleSound();
+                }
+
                 if (Input.GetMouseButtonUp(0))
                 {
                     GameSceneDisplay.instance.InfoText.text = "";
+                    GameSceneDisplay.instance.LockPanel.SetActive(true);
+
 
                     if (Input.mousePosition.x - firstMousePosition.x > GameManager.instance.SlideDetectionDistance)
                     {
@@ -148,17 +174,19 @@ public class PuzzlePieceDisplay : MonoBehaviour
                         if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.x - 1 == transform.position.x && x.GameObject.transform.position.z == transform.position.z).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.x - 1 == transform.position.x && x.GameObject.transform.position.z == transform.position.z).Count() > 0)
                         {
                             //StartCoroutine(HitAnimator());
-                            StartCoroutine(WrongSideAnimato(1));
+                            WrongSideAnimato(1);
                         }
                         else if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.x - 1 > transform.position.x && x.GameObject.transform.position.z == transform.position.z).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.x - 1 > transform.position.x && x.GameObject.transform.position.z == transform.position.z).Count() > 0)
                         {
                             transform.LookAt(transform.position + (Speed * 20f));
-                            StartCoroutine(Movement(Speed));
+                            SetParticle();
+
+                            StartCoroutine(Movement(Speed, 1));
                         }
                         else
                         {
                             //StartCoroutine(HitAnimator());
-                            StartCoroutine(WrongSideAnimato(1));
+                            WrongSideAnimato(1);
                             GameSceneDisplay.instance.InfoText.text += "This movement is not available! Try Again!";
                         }
 
@@ -174,17 +202,19 @@ public class PuzzlePieceDisplay : MonoBehaviour
                         if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.x == transform.position.x - 1 && x.GameObject.transform.position.z == transform.position.z).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.x == transform.position.x - 1 && x.GameObject.transform.position.z == transform.position.z).Count() > 0)
                         {
                             //StartCoroutine(HitAnimator());
-                            StartCoroutine(WrongSideAnimato(3));
+                            WrongSideAnimato(3);
                         }
                         else if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.x < transform.position.x - 1 && x.GameObject.transform.position.z == transform.position.z).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.x < transform.position.x - 1 && x.GameObject.transform.position.z == transform.position.z).Count() > 0)
                         {
                             transform.LookAt(transform.position + (Speed * 20f));
-                            StartCoroutine(Movement(Speed));
+                            SetParticle();
+
+                            StartCoroutine(Movement(Speed, 3));
                         }
                         else
                         {
                             //StartCoroutine(HitAnimator());
-                            StartCoroutine(WrongSideAnimato(3));
+                            WrongSideAnimato(3);
                             GameSceneDisplay.instance.InfoText.text += "This movement is not available! Try Again!";
                         }
                     }
@@ -201,18 +231,20 @@ public class PuzzlePieceDisplay : MonoBehaviour
                              .transform.position.x == transform.position.x).Count() > 0)
                         {
                             //StartCoroutine(HitAnimator());
-                            StartCoroutine(WrongSideAnimato(0));
+                            WrongSideAnimato(0);
                         }
                         else if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.z - 1 > transform.position.z &&
                         x.GameObject.transform.position.x == transform.position.x).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.z - 1 > transform.position.z && x.GameObject.transform.position.x == transform.position.x).Count() > 0)
                         {
                             transform.LookAt(transform.position + (Speed * 20f));
-                            StartCoroutine(Movement(Speed));
+                            SetParticle();
+
+                            StartCoroutine(Movement(Speed, 0));
                         }
                         else
                         {
                             //StartCoroutine(HitAnimator());
-                            StartCoroutine(WrongSideAnimato(0));
+                            WrongSideAnimato(0);
                             GameSceneDisplay.instance.InfoText.text += "This movement is not available! Try Again!";
                         }
                     }
@@ -227,19 +259,26 @@ public class PuzzlePieceDisplay : MonoBehaviour
                         if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.z == transform.position.z - 1 && x.GameObject.transform.position.x == transform.position.x).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.z == transform.position.z - 1 && x.GameObject.transform.position.x == transform.position.x).Count() > 0)
                         {
                             //StartCoroutine(HitAnimator());
-                            StartCoroutine(WrongSideAnimato(2));
+                            WrongSideAnimato(2);
                         }
                         else if (PuzzleDisplay.instance.currentPuzzlePieceList.Where(x => x.GameObject.transform.position.z < transform.position.z - 1 && x.GameObject.transform.position.x == transform.position.x).Count() > 0 || ObstacleDisplay.instance.currentObstaclePieceList.Where(x => x.GameObject.transform.position.z < transform.position.z - 1 && x.GameObject.transform.position.x == transform.position.x).Count() > 0)
                         {
                             transform.LookAt(transform.position + (Speed * 20f));
-                            StartCoroutine(Movement(Speed));
+
+                            SetParticle();
+                            StartCoroutine(Movement(Speed, 2));
                         }
                         else
                         {
                             //StartCoroutine(HitAnimator());
-                            StartCoroutine(WrongSideAnimato(2));
+                            WrongSideAnimato(2);
                             GameSceneDisplay.instance.InfoText.text += "This movement is not available! Try Again!";
                         }
+                    }
+                    else
+                    {
+
+                        GameSceneDisplay.instance.LockPanel.SetActive(false);
                     }
                     GameManager.instance.SelectedObject = null;
                 }
@@ -248,17 +287,27 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
     }
 
-    public IEnumerator Movement(Vector3 spd)
+    void SetParticle()
+    {
+        //GameSceneDisplay.instance.WindParticlePrefab.SetActive(false);
+        //GameSceneDisplay.instance.WindParticlePrefab.SetActive(true);
+        //GameSceneDisplay.instance.WindParticlePrefab.transform.position = transform.position;
+        //GameSceneDisplay.instance.WindParticlePrefab.transform.rotation = transform.rotation;
+        //GameSceneDisplay.instance.WindParticlePrefab.transform.Rotate(0f, 180f, 0f);
+    }
+
+    public IEnumerator Movement(Vector3 spd, int direction)
     {
         IsMoving = true;
-        Quaternion rotation = transform.rotation;
-        GameSceneDisplay.instance.LockPanel.SetActive(true);
-        GameSceneDisplay.instance.WindParticlePrefab.SetActive(true);
-        GameSceneDisplay.instance.WindParticlePrefab.transform.position = transform.position;
-        GameSceneDisplay.instance.WindParticlePrefab.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+        //GameSceneDisplay.instance.LockPanel.SetActive(true);
+        //GameSceneDisplay.instance.WindParticlePrefab.SetActive(true);
+        //GameSceneDisplay.instance.WindParticlePrefab.transform.position = transform.position;
+        //GameSceneDisplay.instance.WindParticlePrefab.transform.rotation = transform.rotation;
+        //GameSceneDisplay.instance.WindParticlePrefab.transform.Rotate(0f, 180f, 0f);
 
         _animator.SetInteger("animation", 14);
 
+        currentDirection = direction;
         while (IsMoving)
         {
             transform.Translate(Vector3.Lerp(Vector3.zero, spd, 0.2f), Space.World);
@@ -266,6 +315,8 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
             if (transform.position.x < 0 || transform.position.z < 0 || transform.position.x > 10 || transform.position.z > 10)
             {
+
+                transform.Rotate(UnityEngine.Random.Range(5, 10), UnityEngine.Random.Range(5, 10), UnityEngine.Random.Range(5, 10));
                 GetComponent<Rigidbody>().useGravity = true;
                 if (puzzlePiece.GameObject.tag == "PuzzlePiece")
                 {
@@ -310,7 +361,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
         {
             _animator.SetInteger("animation", 1);
 
-            StartCoroutine(triggedObject.GetComponent<PuzzlePieceDisplay>().Movement(spd));
+            StartCoroutine(triggedObject.GetComponent<PuzzlePieceDisplay>().Movement(spd, direction));
 
             triggedObject.transform.LookAt(transform.position + (spd * 20f));
 
@@ -366,46 +417,37 @@ public class PuzzlePieceDisplay : MonoBehaviour
         transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
     }
 
-    IEnumerator WrongSideAnimato(int direction)
-    {
-        Debug.Log("sa : " + Math.Abs(transform.rotation.eulerAngles.y / 90));
 
-        _animator.SetTrigger("isRight");
-        if (Math.Round(Math.Abs(transform.rotation.y / 90)) - direction == 0) //forward
+    void WrongSideAnimato(int direction)
+    {
+        Debug.Log("sa : " + (currentDirection - direction));
+
+        GameSceneDisplay.instance.LockPanel.SetActive(false);
+        if (Math.Abs(direction - currentDirection) == 0) //forward
         {
-            _animator.SetInteger("animation", 20);
-            _animator.SetInteger("animation", 1);
+            _animator.SetTrigger("isForward");
             Debug.Log("ileri");
         }
-        else if (Math.Round(Math.Abs(transform.rotation.eulerAngles.y / 90)) - direction == 1) // right
+        else if (Math.Abs(direction - currentDirection) == 1) // right
         {
-            _animator.SetInteger("animation", 21);
-            yield return new WaitForSeconds(0.2f);
-            _animator.SetInteger("animation", 1);
+            _animator.SetTrigger("isRight");
             Debug.Log("sağ");
         }
-        else if (Math.Round(Math.Abs(transform.rotation.eulerAngles.y / 90)) - direction == 2) // back
+        else if (Math.Abs(direction - currentDirection) == 2) // back
         {
-            _animator.SetInteger("animation", 22);
-            yield return new WaitForSeconds(0.2f);
-            _animator.SetInteger("animation", 1);
+            _animator.SetTrigger("isBack");
             Debug.Log("geri");
         }
-        else if (Math.Round(Math.Abs(transform.rotation.eulerAngles.y / 90)) - direction == 3) // left
+        else if (Math.Abs(direction - currentDirection) == 3) // left
         {
-            _animator.SetInteger("animation", 23);
-            yield return new WaitForSeconds(0.2f);
-            _animator.SetInteger("animation", 1);
+            _animator.SetTrigger("isLeft");
             Debug.Log("sol");
         }
     }
 
-    IEnumerator GrumbleSound()
+    void GrumbleSound()
     {
-        while (gameObject.tag == "PuzzlePiece")
-        {
-            //GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.GrumbleMusicList[Random.Range(0, AudioDisplay.instance.GrumbleMusicList.Count)], Random.Range(0.1f, 0.2f));
-            yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 2.1f));
-        }
+        GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.GrumbleMusicList[UnityEngine.Random.Range(0, AudioDisplay.instance.GrumbleMusicList.Count)], UnityEngine.Random.Range(0.5f, 0.6f));
+        //yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 2.1f));
     }
 }
