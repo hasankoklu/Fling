@@ -9,9 +9,4 @@ public class PossProcessDisplay : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
-
-    void Update()
-    {
-
-    }
 }

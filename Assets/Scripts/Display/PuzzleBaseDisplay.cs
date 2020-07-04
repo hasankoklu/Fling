@@ -21,8 +21,8 @@ public class PuzzleBaseDisplay : MonoBehaviour
 
     private void Start()
     {
+        virtualCam.m_Lens.OrthographicSize = 16;
         StartCoroutine(ortSizer());
-        virtualCam.m_Lens.OrthographicSize = 14;
     }
 
     private void Awake()
@@ -35,7 +35,6 @@ public class PuzzleBaseDisplay : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        virtualCam.m_Lens.OrthographicSize = 20;
     }
 
     [Button("Set Base")]
@@ -106,7 +105,7 @@ public class PuzzleBaseDisplay : MonoBehaviour
         {
             if (item.position.x > ortoograpphicSize)
             {
-                ortoograpphicSize = (int)(item.position.x) + 7;
+                ortoograpphicSize = (int)(item.position.x) + 4;
             }
         }
 
