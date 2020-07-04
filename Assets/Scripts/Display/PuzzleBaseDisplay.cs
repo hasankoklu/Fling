@@ -59,7 +59,6 @@ public class PuzzleBaseDisplay : MonoBehaviour
             }
         }
 
-
         Camera.main.transform.position = new Vector3((sizeDelta.x - 1) / 2, Camera.main.transform.position.y, Camera.main.transform.position.z);
 
         if (sizeDelta.x < 21 && sizeDelta.y < 21)
@@ -67,7 +66,7 @@ public class PuzzleBaseDisplay : MonoBehaviour
             if (sizeDelta.x / sizeDelta.y > 1.5f)
             {
                 GameObject go = Instantiate(RectangeGround);
-                go.transform.position = new Vector3((sizeDelta.x - 1) / 2, 0, sizeDelta.y / 2);
+                go.transform.position = new Vector3((sizeDelta.x - 2) / 2, 0, sizeDelta.y / 2);
                 //go.transform.localScale = go.transform.localScale
                 LookAtHere.transform.position = go.transform.position;
             }
@@ -105,7 +104,7 @@ public class PuzzleBaseDisplay : MonoBehaviour
         {
             if (item.position.x > ortoograpphicSize)
             {
-                ortoograpphicSize = (int)(item.position.x) + 4;
+                ortoograpphicSize = (int)(item.position.x) + 3;
             }
         }
 

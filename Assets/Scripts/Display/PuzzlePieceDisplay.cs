@@ -447,7 +447,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
     void GrumbleSound()
     {
-        GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.GrumbleMusicList[UnityEngine.Random.Range(0, AudioDisplay.instance.GrumbleMusicList.Count)], UnityEngine.Random.Range(0.5f, 0.6f));
+        //GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.GrumbleMusicList[UnityEngine.Random.Range(0, AudioDisplay.instance.GrumbleMusicList.Count)], UnityEngine.Random.Range(0.5f, 0.6f));
         //yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 2.1f));
     }
 }
