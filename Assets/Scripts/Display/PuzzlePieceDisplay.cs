@@ -18,6 +18,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
     public Vector3 Speed;
 
     int currentDirection;
+    int characterNumber;
 
     [Button("Snap The Object")]
     public void SnapObject()
@@ -109,6 +110,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
     public Animator _animator;
     private void Start()
     {
+        characterNumber = UnityEngine.Random.Range(0, AudioDisplay.instance.GrumbleMusicList.Count);
         _animator = GetComponent<Animator>();
         _animator.SetInteger("animation", 1);
         _animator.speed = UnityEngine.Random.Range(0.8f, 1.2f);
@@ -165,6 +167,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
                     if (Input.mousePosition.x - firstMousePosition.x > GameManager.instance.SlideDetectionDistance)
                     {
+                        SlideSound();
                         GameSceneDisplay.instance.InfoText.text = " You slide right ! \n";
                         Speed = new Vector3(GameManager.instance.PuzzleMovementSpeed, 0f, 0f);
                         PuzzleDisplay.instance.myPuzzle.MyStepList.LastOrDefault().movedObjectPos = transform.position;
@@ -193,6 +196,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
                     }
                     else if (Input.mousePosition.x - firstMousePosition.x < -GameManager.instance.SlideDetectionDistance)
                     {
+                        SlideSound();
                         GameSceneDisplay.instance.InfoText.text = " You slide left ! \n";
                         Speed = new Vector3(-GameManager.instance.PuzzleMovementSpeed, 0f, 0f);
                         PuzzleDisplay.instance.myPuzzle.MyStepList.LastOrDefault().movedObjectPos = GameManager.instance.SelectedObject.transform.position;
@@ -220,6 +224,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
                     }
                     else if (Input.mousePosition.y - firstMousePosition.y > GameManager.instance.SlideDetectionDistance)
                     {
+                        SlideSound();
                         GameSceneDisplay.instance.InfoText.text = " You slide up ! \n";
                         Speed = new Vector3(0f, 0f, GameManager.instance.PuzzleMovementSpeed);
                         PuzzleDisplay.instance.myPuzzle.MyStepList.LastOrDefault().movedObjectPos = GameManager.instance.SelectedObject.transform.position;
@@ -250,6 +255,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
                     }
                     else if (Input.mousePosition.y - firstMousePosition.y < -GameManager.instance.SlideDetectionDistance)
                     {
+                        SlideSound();
                         GameSceneDisplay.instance.InfoText.text = " You slide down ! \n";
                         Speed = new Vector3(0f, 0f, -GameManager.instance.PuzzleMovementSpeed);
                         PuzzleDisplay.instance.myPuzzle.MyStepList.LastOrDefault().movedObjectPos = GameManager.instance.SelectedObject.transform.position;
@@ -320,6 +326,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
                 GetComponent<Rigidbody>().useGravity = true;
                 if (puzzlePiece.GameObject.tag == "PuzzlePiece")
                 {
+                    ScreamSound();
                     puzzlePiece.GameObject.tag = "FinishedPuzzle";
                     PuzzleDisplay.instance.currentPuzzlePieceList.Remove(puzzlePiece);
 
@@ -447,7 +454,17 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
     void GrumbleSound()
     {
-        //GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.GrumbleMusicList[UnityEngine.Random.Range(0, AudioDisplay.instance.GrumbleMusicList.Count)], UnityEngine.Random.Range(0.5f, 0.6f));
+        //GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.GrumbleMusicList[characterNumber], UnityEngine.Random.Range(0.5f, 0.6f));
+        //yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 2.1f));
+    }
+    void SlideSound()
+    {
+        //GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.SlideMusicList[characterNumber], UnityEngine.Random.Range(0.5f, 0.6f));
+        //yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 2.1f));
+    }
+    void ScreamSound()
+    {
+        //GetComponent<AudioSource>().PlayOneShot(AudioDisplay.instance.ScreamMusicList[UnityEngine.Random.Range(0, AudioDisplay.instance.ScreamMusicList.Count)], UnityEngine.Random.Range(0.5f, 0.6f));
         //yield return new WaitForSeconds(UnityEngine.Random.Range(1.2f, 2.1f));
     }
 }

@@ -17,11 +17,11 @@ public class PuzzleBaseDisplay : MonoBehaviour
 
     public List<GameObject> GameBasePiecePrefabList = new List<GameObject>();
     public CinemachineVirtualCamera virtualCam;
-    private int ortoograpphicSize;
+    private float ortoograpphicSize;
 
     private void Start()
     {
-        virtualCam.m_Lens.OrthographicSize = 16;
+        virtualCam.m_Lens.OrthographicSize = 14;
         StartCoroutine(ortSizer());
     }
 
@@ -66,7 +66,7 @@ public class PuzzleBaseDisplay : MonoBehaviour
             if (sizeDelta.x / sizeDelta.y > 1.5f)
             {
                 GameObject go = Instantiate(RectangeGround);
-                go.transform.position = new Vector3((sizeDelta.x - 2) / 2, 0, sizeDelta.y / 2);
+                go.transform.position = new Vector3((sizeDelta.x - 3) / 2, 0, (sizeDelta.y + 6) / 2);
                 //go.transform.localScale = go.transform.localScale
                 LookAtHere.transform.position = go.transform.position;
             }
@@ -75,7 +75,7 @@ public class PuzzleBaseDisplay : MonoBehaviour
                 int k = (int)(sizeDelta.x - 8);
                 int l = (int)(sizeDelta.y - 8);
                 GameObject go = Instantiate(SquareGround);
-                go.transform.position = new Vector3((sizeDelta.x - 1) / 2, -Math.Abs(0.26f + (k * 0.26f)), sizeDelta.y / 2);
+                go.transform.position = new Vector3((sizeDelta.x - 1) / 2, -0.35f, sizeDelta.y / 2);
                 go.transform.localScale = new Vector3((1 + k * 0.14f), (1 + ((k + l) / 2f * 0.14f)), (1 + l * 0.14f));
                 CameraSystem.transform.position = new Vector3(0.5f + k * 0.5f, CameraSystem.transform.position.y, CameraSystem.transform.position.z);
                 LookAtHere.transform.position = new Vector3(sizeDelta.x / 2, go.transform.position.y, sizeDelta.y / 2);
@@ -104,13 +104,13 @@ public class PuzzleBaseDisplay : MonoBehaviour
         {
             if (item.position.x > ortoograpphicSize)
             {
-                ortoograpphicSize = (int)(item.position.x) + 3;
+                ortoograpphicSize = (int)(item.position.x) + 3.5f;
             }
         }
 
         while (virtualCam.m_Lens.OrthographicSize > ortoograpphicSize)
         {
-            virtualCam.m_Lens.OrthographicSize -= 0.01f;
+            virtualCam.m_Lens.OrthographicSize -= 0.023f;
             yield return new WaitForEndOfFrame();
         }
     }

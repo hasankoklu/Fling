@@ -17,6 +17,8 @@ public class AudioDisplay : MonoBehaviour
 
     public List<AudioClip> FinishMusicList;
     public List<AudioClip> GrumbleMusicList;
+    public List<AudioClip> SlideMusicList;
+    public List<AudioClip> ScreamMusicList;
 
     [HideInInspector]
     public AudioSource _audioSource;
