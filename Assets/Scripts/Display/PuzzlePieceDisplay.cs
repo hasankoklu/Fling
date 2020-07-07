@@ -112,7 +112,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
     {
         characterNumber = UnityEngine.Random.Range(0, AudioDisplay.instance.GrumbleMusicList.Count);
         _animator = GetComponent<Animator>();
-        _animator.SetInteger("animation", 1);
+        _animator.SetTrigger("Idle");
         _animator.speed = UnityEngine.Random.Range(0.8f, 1.2f);
         //StartCoroutine(GrumbleSound());
         PuzzleDisplay.instance.currentPuzzlePieceList.Add(puzzlePiece);
@@ -121,7 +121,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
     private void OnEnable()
     {
         _animator = GetComponent<Animator>();
-        _animator.SetInteger("animation", 1);
+        _animator.SetTrigger("Idle");
         _animator.speed = UnityEngine.Random.Range(0.8f, 1.2f);
 
         //PuzzleDisplay.instance.currentPuzzlePieceList.Add(puzzlePiece);
@@ -311,7 +311,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
         //GameSceneDisplay.instance.WindParticlePrefab.transform.rotation = transform.rotation;
         //GameSceneDisplay.instance.WindParticlePrefab.transform.Rotate(0f, 180f, 0f);
 
-        _animator.SetInteger("animation", 14);
+        _animator.SetTrigger("Hit");
 
         currentDirection = direction;
         while (IsMoving)
@@ -366,7 +366,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
         if (triggedObject.tag == "PuzzlePiece")
         {
-            _animator.SetInteger("animation", 1);
+            _animator.SetTrigger("Idle");
 
             StartCoroutine(triggedObject.GetComponent<PuzzlePieceDisplay>().Movement(spd, direction));
 
@@ -378,7 +378,7 @@ public class PuzzlePieceDisplay : MonoBehaviour
         }
         else if (triggedObject.tag == "Obstacle")
         {
-            _animator.SetInteger("animation", 1);
+            _animator.SetTrigger("Idle");
             transform.position = new Vector3(Mathf.Round(transform.position.x), transform.position.y, Mathf.Round(transform.position.z));
             //transform.rotation = rotation;
         }
@@ -411,16 +411,16 @@ public class PuzzlePieceDisplay : MonoBehaviour
 
     IEnumerator HitAnimator()
     {
-        _animator.SetInteger("animation", 7);
+        _animator.SetTrigger("Hit");
         yield return new WaitForSeconds(0.2f);
-        _animator.SetInteger("animation", 1);
+        //_animator.SetTrigger("Idle");
     }
 
     IEnumerator WaterAnimator()
     {
-        _animator.SetInteger("animation", 4);
+        _animator.SetTrigger("Jump");
         yield return new WaitForSeconds(1f);
-        _animator.SetInteger("animation", 1);
+        //_animator.SetTrigger("Idle");
         transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), Mathf.Round(transform.position.z));
     }
 
