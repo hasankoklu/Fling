@@ -8,6 +8,7 @@ using System.Linq;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.Net.Http.Headers;
+using UnityEditor.SceneManagement;
 
 public class PuzzleDisplay : MonoBehaviour
 {
@@ -109,8 +110,8 @@ public class PuzzleDisplay : MonoBehaviour
     [Button("Save This Puzzle")]
     void SavePuzzle(int level)
     {
-        Debug.Log("open for level design editor");
-        //UnityEditor.EditorSceneManager.SaveScene(UnityEditor.EditorSceneManager.GetActiveScene(), "Assets/Scenes/Levels/Level" + level.ToString() + ".unity");
+        //Debug.Log("open for level design editor");
+        EditorSceneManager.SaveScene(EditorSceneManager.GetActiveScene(), "Assets/Scenes/Levels/Level" + level.ToString() + ".unity");
     }
 
     [Button("Load This Puzzle")]
