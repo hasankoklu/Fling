@@ -16,26 +16,26 @@ MonoBehaviour:
   m_AdvancedMode: 0
   postExposure:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: 0.19
   contrast:
-    m_OverrideState: 0
-    m_Value: 0
+    m_OverrideState: 1
+    m_Value: 5.1
     min: -100
     max: 100
   colorFilter:
-    m_OverrideState: 0
-    m_Value: {r: 0.9716981, g: 0.9716981, b: 0.9716981, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 0.9481132, b: 0.9481132, a: 1}
     hdr: 1
     showAlpha: 0
     showEyeDropper: 1
   hueShift:
-    m_OverrideState: 0
-    m_Value: 10
+    m_OverrideState: 1
+    m_Value: 8
     min: -180
     max: 180
   saturation:
     m_OverrideState: 0
-    m_Value: 0
+    m_Value: -9.5
     min: -100
     max: 100
 --- !u!114 &-1088896074574318092
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70afe9e12c7a7ed47911bb608a23a8ff, type: 3}
   m_Name: SplitToning
   m_EditorClassIdentifier: 
-  active: 1
+  active: 0
   m_AdvancedMode: 0
   shadows:
     m_OverrideState: 1
