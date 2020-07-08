@@ -48,13 +48,13 @@ public class PuzzleBaseDisplay : MonoBehaviour
                 {
                     GameObject gameBasePiece = Instantiate(GameBasePiecePrefabList[0]);
                     gameBasePiece.transform.SetParent(transform);
-                    gameBasePiece.transform.position = new Vector3(i, 0.35f, j);
+                    gameBasePiece.transform.position = new Vector3(i, 0.25f, j);
                 }
                 else
                 {
                     GameObject gameBasePiece = Instantiate(GameBasePiecePrefabList[1]);
                     gameBasePiece.transform.SetParent(transform);
-                    gameBasePiece.transform.position = new Vector3(i, 0.35f, j);
+                    gameBasePiece.transform.position = new Vector3(i, 0.25f, j);
                 }
             }
         }
